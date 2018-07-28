@@ -20,7 +20,7 @@
 ### 规约
 
 - 需要对项目文件进行注释，用来展示当前的进度
-```java
+```
 [$0 name time] 这样的规范来表示一个文件的阅读进度
 
 $
@@ -34,12 +34,13 @@ time
  用 yyyy-MM-dd 的形式表示
 
 标记的位置应在 class 声明上一行，如:
-[$3 nick 2018-07-25]
+//[$3 nick 2018-07-25]
 class Demo {
 ...
 }
 ```
-后面会根据这个注释来导出一份阅读状态图
+
+根据根项目下的 `src/main/java/com/nickchen/util/ProcessTree.java` 可以导出当前文件的阅读状态。
 
 
 ## What's is Apache Curator?

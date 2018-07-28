@@ -22,11 +22,16 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Mechanism for timing methods and recording counters
+ *
+ * 专门用来记录运行时间和计数的工具
  */
+//[$3 nick 2018-07-28]
 public interface TracerDriver
 {
     /**
      * Record the given trace event
+     *
+     * 这个名字起的怪怪的，以为是跟踪所有的堆栈信息。结果只是记录一下事件的执行事件。
      *
      * @param name of the event
      * @param time time event took
@@ -36,6 +41,8 @@ public interface TracerDriver
 
     /**
      * Add to a named counter
+     *
+     * 针对一个 name 做计数
      *
      * @param name name of the counter
      * @param increment amount to increment

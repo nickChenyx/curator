@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Default tracer driver
  */
+//[$1 nick 2018-07-28]
 public class DefaultTracerDriver implements TracerDriver
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
