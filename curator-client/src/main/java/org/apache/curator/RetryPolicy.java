@@ -19,14 +19,19 @@
 package org.apache.curator;
 
 /**
+ * 抽象重试连接时使用的策略
+ *
  * Abstracts the policy to use when retrying connections
  */
+//[$3 nick 2018-07-31]
 public interface RetryPolicy
 {
     /**
      * Called when an operation has failed for some reason. This method should return
      * true to make another attempt.
      *
+     * 非常简单的设计了，从这一个接口开始引申到各个不同的实现
+     * 这个接口有三个入参， 重试次数，已经消耗时间，sleeper
      *
      * @param retryCount the number of times retried so far (0 the first time)
      * @param elapsedTimeMs the elapsed time in ms since the operation was attempted

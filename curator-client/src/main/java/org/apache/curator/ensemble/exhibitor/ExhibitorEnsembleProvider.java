@@ -39,23 +39,41 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * 不停的拉取最新的 Exhibitor 来更新需要使用的 connectionString
+ *
  * Ensemble provider that polls a cluster of Exhibitor (https://github.com/Netflix/exhibitor)
  * instances for the connection string.
  * If the set of instances should change, new ZooKeeper connections will use the new connection
  * string.
  */
+//[$3 nick 2018-07-31]
 public class ExhibitorEnsembleProvider implements EnsembleProvider
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final AtomicReference<Exhibitors> exhibitors = new AtomicReference<Exhibitors>();
     private final AtomicReference<Exhibitors> masterExhibitors = new AtomicReference<Exhibitors>();
+    /**
+     * 访问 Exhibitor 的服务，获取返回的 raw string
+     */
     private final ExhibitorRestClient restClient;
     private final String restUriPath;
+    /**
+     * 拉取动作的间隔时间， 其实就是一个 ScheduledExecutor 来做定时
+     */
     private final int pollingMs;
+    /**
+     * 重试策略的接口
+     */
     private final RetryPolicy retryPolicy;
+    /**
+     * 执行拉取任务的线程池
+     */
     private final ScheduledExecutorService service = ThreadUtils.newSingleThreadScheduledExecutor("ExhibitorEnsembleProvider");
     private final Random random = new Random();
     private final AtomicReference<String> connectionString = new AtomicReference<String>("");
+    /**
+     * 标记当前 provider 的状态
+     */
     private final AtomicReference<State> state = new AtomicReference<State>(State.LATENT);
 
     private static final String MIME_TYPE = "application/x-www-form-urlencoded";
@@ -66,8 +84,17 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
 
     private enum State
     {
+        /**
+         * 准备状态，等待开始
+         */
         LATENT,
+        /**
+         * 开始状态
+         */
         STARTED,
+        /**
+         * 关闭状态
+         */
         CLOSED
     }
 
@@ -100,6 +127,8 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
     }
 
     /**
+     * 可以在启动Curator实例之前调用以设置当前连接字符串
+     *
      * Can be called prior to starting the Curator instance to set the current connection string
      *
      * @throws Exception errors
@@ -110,6 +139,10 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
         poll();
     }
 
+    /**
+     * 语义上还蛮符合 Thread.start() 的，的确是开启了一个线程池在跑任务
+     * @throws Exception
+     */
     @Override
     public void start() throws Exception
     {
@@ -157,6 +190,9 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
         return false;
     }
 
+    /**
+     * 就不停的再干一件事儿，拉取 Exhibitors 内的数据，更新最新的 connectionString
+     */
     @VisibleForTesting
     protected void poll()
     {
@@ -224,6 +260,11 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
         return 0;
     }
 
+    /**
+     * 使用 Exhibitors 内配置的备用 connectionString 获取 kv 配置
+     * @param localExhibitors
+     * @return
+     */
     private Map<String, String> useBackup(Exhibitors localExhibitors)
     {
         Map<String, String>     values = newValues();
@@ -291,6 +332,11 @@ public class ExhibitorEnsembleProvider implements EnsembleProvider
         return values;
     }
 
+    /**
+     * 访问 Exhibitors 服务，获取 kv 配置
+     * @param localExhibitors
+     * @return
+     */
     private Map<String, String> queryExhibitors(Exhibitors localExhibitors)
     {
         Map<String, String> values = newValues();

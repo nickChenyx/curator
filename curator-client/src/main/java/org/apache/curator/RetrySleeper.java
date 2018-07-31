@@ -21,8 +21,10 @@ package org.apache.curator;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 抽象休眠的重试策略
  * Abstraction for retry policies to sleep
  */
+//[$3 nick 2018-07-31]
 public interface RetrySleeper
 {
     /**
@@ -30,7 +32,7 @@ public interface RetrySleeper
      *
      * @param time time
      * @param unit time unit
-     * @throws InterruptedException if the sleep is interrupted
+     * @throws InterruptedException if the sleep is interrupted 当被interrupted 时 抛出中断异常
      */
     public void     sleepFor(long time, TimeUnit unit) throws InterruptedException;
 }

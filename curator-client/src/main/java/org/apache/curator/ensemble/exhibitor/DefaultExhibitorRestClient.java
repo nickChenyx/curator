@@ -24,6 +24,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
+/**
+ * 获取 Exhibitor 响应的客户端，仅做一件事，访问 Exhibitor 属性构成的 URI 并返回响应
+ */
+//[$3 nick 2018-07-31]
 @SuppressWarnings("UnusedDeclaration")
 public class DefaultExhibitorRestClient implements ExhibitorRestClient
 {

@@ -18,6 +18,7 @@
  */
 package org.apache.curator.ensemble.exhibitor;
 
+//[$3 nick 2018-07-31]
 public interface ExhibitorRestClient
 {
     /**

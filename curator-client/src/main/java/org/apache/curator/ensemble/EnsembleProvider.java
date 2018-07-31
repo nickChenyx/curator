@@ -25,8 +25,11 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
+ * 提供ZooKeeper连接字符串的抽象
+ * 这个 provider 是在不停的检查新的 zk 实例更新，然后提供 connectionString
  * Abstraction that provides the ZooKeeper connection string
  */
+//[$3 nick 2018-07-31]
 public interface EnsembleProvider extends Closeable
 {
     /**

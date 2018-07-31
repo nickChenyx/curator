@@ -43,13 +43,28 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-class ConnectionState implements Watcher, Closeable
+/**
+ * 通过 ZK 的 watcher 封装连接状态
+ */
+//[$1 nick 2018-07-31]
+class ConnectionState implements
+        Watcher/* ZooKeeper 的基础类，用来监听连接状态*/,
+        Closeable/**/
 {
+    /**
+     * 用来存储异常堆栈的深度，也就是只存最近十次的异常
+     */
     private static final int MAX_BACKGROUND_EXCEPTIONS = 10;
+    /**
+     * 判断当前是否打印该级别的日志，DebugUtils 定义了好多级别
+     */
     private static final boolean LOG_EVENTS = Boolean.getBoolean(DebugUtils.PROPERTY_LOG_EVENTS);
     private static final Logger log = LoggerFactory.getLogger(ConnectionState.class);
     private final HandleHolder zooKeeper;
     private final AtomicBoolean isConnected = new AtomicBoolean(false);
+    /**
+     * 上次session链接超时的时间
+     */
     private final AtomicInteger lastNegotiatedSessionTimeoutMs = new AtomicInteger(0);
     private final EnsembleProvider ensembleProvider;
     private final int sessionTimeoutMs;

@@ -26,8 +26,13 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * 就只提供了最简单的 connectionString 设置
+ * 支持了 updateServerListEnabled 属性
+ *
+ *
  * Standard ensemble provider that wraps a fixed connection string
  */
+//[$3 nick 2018-07-31]
 public class FixedEnsembleProvider implements EnsembleProvider
 {
     private final AtomicReference<String> connectionString = new AtomicReference<>();

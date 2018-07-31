@@ -23,7 +23,7 @@ public class ProcessTree {
     private static List<String> filterFiles = new ArrayList<>();
     private static int level = -1;
     private static ProcessStatus processStatus = new ProcessStatus();
-
+    private static int totalJavaFileCount = 0;
     private static final String PROJECT_ROOT_PATH = "e:/curator";
 
     private static void initFilterFiles() {
@@ -58,6 +58,7 @@ public class ProcessTree {
                         System.out.print("│  ");
                     }
                     String tag;
+                    if (ftmp.getName().endsWith(".java")) totalJavaFileCount++;
                     if (ftmp.getName().endsWith(".java") && (tag = parseFileComment(ftmp))!=null) {
                         System.out.println("├── " + ftmp.getName() + " " + tag);
                     } else {
@@ -83,6 +84,7 @@ public class ProcessTree {
         Map<CommentProcessStatusEnum, Integer> commentProcessStatus = processStatus.getCommentProcessStatus();
         commentProcessStatus.forEach((key, value) -> System.out.println(key.getDesc() + " : " + value));
         System.out.println("===== comment process end =======");
+        System.out.println("==>> current progress：" + String.valueOf(processStatus.getCommentProcessStatus().get(CommentProcessStatusEnum.FINISH)*1.0 / totalJavaFileCount * 100).substring(0,4) + "%");
         System.out.println("======= print process status end =======");
     }
 
@@ -131,11 +133,11 @@ public class ProcessTree {
             case TODO:
                 pie = "◁";break;
             case DOING:
-                pie = "☀";break;
+                pie = "☚";break;
             case ALMOST:
                 pie = "☼";break;
             case FINISH:
-                pie = "☚";break;
+                pie = "☀";break;
             default: pie = "☚";
         }
         commentCount(status);

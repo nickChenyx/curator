@@ -19,6 +19,12 @@
 
 package org.apache.curator.utils;
 
+/**
+ * 这里使用 Boolean.getBoolean(DebugUtils.PROPERTY_LOG_EVENTS);
+ * 这样的方式从 parseBoolean(System.getProperty(name)); 获取内容
+ * 应该是标志各级日志是否打印的工具类
+ */
+//[$3 nick 2018-07-31]
 public class DebugUtils
 {
     public static final String PROPERTY_LOG_EVENTS = "curator-log-events";
