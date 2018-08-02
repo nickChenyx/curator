@@ -6,6 +6,14 @@
 - ☼ 表示大部分完成，任有小部分收尾
 - ☀ 表示文件阅读结束
 
+====== print process status start ======
+==== comment process start =====
+完成 : 12
+阅读中 : 3
+===== comment process end =======
+==>> current progress：2.46%
+======= print process status end =======
+
 ```
 ├── curator-client
 │  ├── src
@@ -17,14 +25,14 @@
 │  │  │  │  │  │  │  ├── ConnectionState.java ☚ <nick>
 │  │  │  │  │  │  │  ├── CuratorConnectionLossException.java
 │  │  │  │  │  │  │  ├── CuratorZookeeperClient.java
-│  │  │  │  │  │  │  ├── HandleHolder.java
+│  │  │  │  │  │  │  ├── HandleHolder.java ☀ <nick>
 │  │  │  │  │  │  │  ├── RetryLoop.java
 │  │  │  │  │  │  │  ├── RetryPolicy.java ☀ <nick>
 │  │  │  │  │  │  │  ├── RetrySleeper.java ☀ <nick>
 │  │  │  │  │  │  │  ├── SessionFailRetryLoop.java
 │  │  │  │  │  │  │  ├── TimeTrace.java
 │  │  │  │  │  │  │  ├── connection
-│  │  │  │  │  │  │  │  ├── ConnectionHandlingPolicy.java
+│  │  │  │  │  │  │  │  ├── ConnectionHandlingPolicy.java ☚ <nick>
 │  │  │  │  │  │  │  │  ├── StandardConnectionHandlingPolicy.java
 │  │  │  │  │  │  │  ├── drivers
 │  │  │  │  │  │  │  │  ├── AdvancedTracerDriver.java
@@ -54,7 +62,7 @@
 │  │  │  │  │  │  │  │  ├── CloseableUtils.java
 │  │  │  │  │  │  │  │  ├── Compatibility.java
 │  │  │  │  │  │  │  │  ├── DebugUtils.java ☀ <nick>
-│  │  │  │  │  │  │  │  ├── DefaultTracerDriver.java ☚ <nick>
+│  │  │  │  │  │  │  │  ├── DefaultTracerDriver.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── DefaultZookeeperFactory.java
 │  │  │  │  │  │  │  │  ├── EnsurePath.java
 │  │  │  │  │  │  │  │  ├── ExceptionAccumulator.java
@@ -609,6 +617,8 @@
 │  │  │  │  ├── nickchen
 │  │  │  │  │  ├── enumm
 │  │  │  │  │  │  ├── CommentProcessStatusEnum.java
+│  │  │  │  │  │  ├── GoodCodeMarkEnum.java
 │  │  │  │  │  ├── util
-│  │  │  │  │  │  ├── ProcessTree.java
+│  │  │  │  │  │  ├── ProcessTree.java ☚ <nick>
+
 ```

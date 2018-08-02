@@ -105,6 +105,7 @@ public class ProcessTree {
             String line, pkg=null;
             int lineNum = 1;
             while ((line = br.readLine()) != null) {
+                line = line.trim();
                 if (line.startsWith("package")) {
                     pkg = line.substring(8, line.length()-1);
                 }
