@@ -26,11 +26,18 @@ import java.util.concurrent.TimeUnit;
 /**
  * Default tracer driver
  */
-//[$1 nick 2018-07-28]
+//[$3 nick 2018-07-28]
 public class DefaultTracerDriver implements TracerDriver
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    /**
+     * 打印一下执行时间之类的
+     *
+     * @param name of the event
+     * @param time time event took
+     * @param unit time unit
+     */
     @Override
     public void addTrace(String name, long time, TimeUnit unit)
     {

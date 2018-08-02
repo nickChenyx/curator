@@ -23,9 +23,12 @@ import org.apache.curator.RetryLoop;
 import java.util.concurrent.Callable;
 
 /**
+ * 抽象连接处理
+ *
  * Abstracts connection handling so that Curator can emulate it's old, pre 3.0.0
  * handling and update to newer handling.
  */
+//[$1 nick 2018-08-01]
 public interface ConnectionHandlingPolicy
 {
     /**
@@ -67,6 +70,10 @@ public interface ConnectionHandlingPolicy
      */
     <T> T callWithRetry(CuratorZookeeperClient client, Callable<T> proc) throws Exception;
 
+    /**
+     * 检查超时
+     * 和 zk 连接出现时可能会出现的各种状态
+     */
     enum CheckTimeoutsResult
     {
         /**

@@ -24,6 +24,10 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
+/**
+ * 这个类就是持有 ZooKeeper 实例用的，具体是由 Helper 来维持实例
+ */
+//[$3 nick 2018-08-01]
 class HandleHolder
 {
     private final ZookeeperFactory zookeeperFactory;
@@ -34,6 +38,10 @@ class HandleHolder
 
     private volatile Helper helper;
 
+    /**
+     * 熟悉的实现方式...
+     * 这个接口用来提供一些关于 zk 的基础信息
+     */
     private interface Helper
     {
         ZooKeeper getZooKeeper() throws Exception;
@@ -79,12 +87,21 @@ class HandleHolder
         helper = null;
     }
 
+    /**
+     * 关闭现有的 zk 连接
+     * 新建一个
+     * 可以看到是 Helper 维持着 ZooKeeper 实例
+     * @throws Exception
+     */
     void closeAndReset() throws Exception
     {
         internalClose(0);
 
         // first helper is synchronized when getZooKeeper is called. Subsequent calls
         // are not synchronized.
+        // 这个实现有点骚气，在内部 synchronized 内，开始了 new 的过程，然后就直接拿到了可用的 helper
+        // 值得学习，完成了初始化创建同步，之后都不用同步块的作用！
+        //[@@ nick]
         helper = new Helper()
         {
             private volatile ZooKeeper zooKeeperHandle = null;
@@ -97,6 +114,9 @@ class HandleHolder
                 {
                     if ( zooKeeperHandle == null )
                     {
+                        /*
+                         * 还是靠 EnsembleProvider 提供 connectionString 来链接
+                         */
                         connectionString = ensembleProvider.getConnectionString();
                         zooKeeperHandle = zookeeperFactory.newZooKeeper(connectionString, sessionTimeout, watcher, canBeReadOnly);
                     }
@@ -140,6 +160,9 @@ class HandleHolder
         };
     }
 
+    /**
+     * 关闭zk 连接
+     */
     private void internalClose(int waitForShutdownTimeoutMs) throws Exception
     {
         try
@@ -154,6 +177,10 @@ class HandleHolder
                     {
                     }
                 };
+                /**
+                 * 先把 watcher 给替换了，免得触发 balabla 事件
+                 * 也就是说这样关掉是不会触发程序其他功能
+                 */
                 zooKeeper.register(dummyWatcher);   // clear the default watcher so that no new events get processed by mistake
                 zooKeeper.close(waitForShutdownTimeoutMs);
             }

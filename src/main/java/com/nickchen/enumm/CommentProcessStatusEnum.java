@@ -2,6 +2,7 @@ package com.nickchen.enumm;
 
 /**
  * 阅读进度的状态枚举
+ * @author nickChen
  */
 public enum CommentProcessStatusEnum {
     TODO("下一步要看", 0), DOING("阅读中", 1), ALMOST("还有部分", 2), FINISH("完成", 3);

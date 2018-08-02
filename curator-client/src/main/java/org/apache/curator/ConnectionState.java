@@ -60,20 +60,38 @@ class ConnectionState implements
      */
     private static final boolean LOG_EVENTS = Boolean.getBoolean(DebugUtils.PROPERTY_LOG_EVENTS);
     private static final Logger log = LoggerFactory.getLogger(ConnectionState.class);
+    /**
+     * 用来维持 ZooKeeper 实例的
+     */
     private final HandleHolder zooKeeper;
     private final AtomicBoolean isConnected = new AtomicBoolean(false);
     /**
      * 上次session链接超时的时间
      */
     private final AtomicInteger lastNegotiatedSessionTimeoutMs = new AtomicInteger(0);
+    /**
+     * 提供ZooKeeper连接字符串的抽象
+     */
     private final EnsembleProvider ensembleProvider;
     private final int sessionTimeoutMs;
     private final int connectionTimeoutMs;
     private final AtomicReference<TracerDriver> tracer;
     private final ConnectionHandlingPolicy connectionHandlingPolicy;
+    /**
+     * 用来异常信息的队列，长度维持在 MAX_BACKGROUND_EXCEPTIONS 内
+     */
     private final Queue<Exception> backgroundExceptions = new ConcurrentLinkedQueue<Exception>();
+    /**
+     * 一列 zk 的 watcher
+     */
     private final Queue<Watcher> parentWatchers = new ConcurrentLinkedQueue<Watcher>();
+    /**
+     *
+     */
     private final AtomicLong instanceIndex = new AtomicLong();
+    /**
+     *
+     */
     private volatile long connectionStartMs = 0;
 
     ConnectionState(ZookeeperFactory zookeeperFactory, EnsembleProvider ensembleProvider, int sessionTimeoutMs, int connectionTimeoutMs, Watcher parentWatcher, AtomicReference<TracerDriver> tracer, boolean canBeReadOnly, ConnectionHandlingPolicy connectionHandlingPolicy)

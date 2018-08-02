@@ -1,14 +1,17 @@
 package com.nickchen.util;
 
 import com.nickchen.enumm.CommentProcessStatusEnum;
+import com.nickchen.enumm.GoodCodeMarkEnum;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOError;
+import java.io.IOException;
 import lombok.Data;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.*;
-
-import static com.nickchen.enumm.CommentProcessStatusEnum.*;
 
 /**
  * 阅读进展报告
@@ -18,13 +21,16 @@ import static com.nickchen.enumm.CommentProcessStatusEnum.*;
  *
  * @author nickChen
  * create on 2018-07-28
+ * update on 2018-08-01 添加了优秀代码段检索导出到文件
  */
 public class ProcessTree {
     private static List<String> filterFiles = new ArrayList<>();
     private static int level = -1;
     private static ProcessStatus processStatus = new ProcessStatus();
     private static int totalJavaFileCount = 0;
-    private static final String PROJECT_ROOT_PATH = "e:/curator";
+    private static List<String> goodCodeMarkQueue = new ArrayList<>();
+//    private static final String PROJECT_ROOT_PATH = "e:/curator";
+    private static final String PROJECT_ROOT_PATH = "/Users/nickChen/personal/project/curatorSource/curator";
 
     private static void initFilterFiles() {
         String[] fileName = new String[]{".git", ".", ".gitignore", ".idea", "target",
@@ -36,7 +42,9 @@ public class ProcessTree {
         initFilterFiles();
         ProcessTree.readAllFiles(PROJECT_ROOT_PATH);
         printProcessStatus();
+        printGoodCodeMark();
     }
+
 
     private static void readAllFiles(String path) {
         File f = new File(path);
@@ -58,7 +66,9 @@ public class ProcessTree {
                         System.out.print("│  ");
                     }
                     String tag;
-                    if (ftmp.getName().endsWith(".java")) totalJavaFileCount++;
+                    if (ftmp.getName().endsWith(".java")) {
+                        totalJavaFileCount++;
+                    }
                     if (ftmp.getName().endsWith(".java") && (tag = parseFileComment(ftmp))!=null) {
                         System.out.println("├── " + ftmp.getName() + " " + tag);
                     } else {
@@ -92,13 +102,21 @@ public class ProcessTree {
     private static String parseFileComment(File javaFile) {
         String res = null;
         try(BufferedReader br = new BufferedReader(new FileReader(javaFile))) {
-            String line;
+            String line, pkg=null;
+            int lineNum = 1;
             while ((line = br.readLine()) != null) {
-                if (line.startsWith("//[")) {
-                    //[$1 nick 2018-07-28]
-                    res = parseCustomTag(trimExtra(line, "//[", "]"));
-                    break;
+                if (line.startsWith("package")) {
+                    pkg = line.substring(8, line.length()-1);
                 }
+                if (line.trim().startsWith("//[$")) {
+                    //[$1 nick 2018-07-28]
+                    res = parseCustomTag(trimExtra(line, "//[", "]"), CommentProcessStatusEnum.TAG);
+//                    break;
+                }
+                if (line.trim().startsWith("//[@@")) {
+                    goodCodeMarkQueue.add(pkg +"."+ javaFile.getName() + " <" + parseCustomAATag(trimExtra(line.trim(), "//[", "]"))+  "> ["+lineNum+"]");
+                }
+                lineNum++;
             }
 
         } catch (Exception e) {
@@ -111,8 +129,24 @@ public class ProcessTree {
      * 解析自定义的 tag
      * 如阅读进展tag：$1 nick 2018-07-28
      */
-    private static String parseCustomTag(String tag) {
-        return parseCustom$Tag(tag);
+    private static String parseCustomTag(String line, String tag) {
+        if (tag.equals(CommentProcessStatusEnum.TAG)) {
+            return parseCustom$Tag(line);
+        } else if (tag.equals(GoodCodeMarkEnum.TAG)) {
+            return parseCustomAATag(line);
+        }
+        return "";
+    }
+
+    /**
+     * 解析自定义的 @@ 标签
+     * [@@ nick]
+     * @param tag
+     * @return
+     */
+    private static String parseCustomAATag(String tag) {
+        String[] split = tag.split(" ");
+        return split[1];
     }
 
     /**
@@ -155,6 +189,18 @@ public class ProcessTree {
         });
     }
 
+    private static void printGoodCodeMark() {
+        String relativelyPath = System.getProperty("user.dir");
+        String fileName = "goodCodeMark.md";
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(relativelyPath, fileName)))) {
+            for (String line : goodCodeMarkQueue) {
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static String trimExtra(String src, String extra) {
         return trimExtra(src, extra, extra);
