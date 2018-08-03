@@ -91,6 +91,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * }
  * </pre>
  */
+//[$1 nick 2018-08-02]
 public class SessionFailRetryLoop implements Closeable
 {
     private final CuratorZookeeperClient    client;

@@ -18,6 +18,7 @@
  */
 package org.apache.curator.drivers;
 
+//[$1 nick 2018-08-02]
 public class EventTrace
 {
   private final String name;

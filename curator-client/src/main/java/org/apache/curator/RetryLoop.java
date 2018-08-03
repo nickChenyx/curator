@@ -57,6 +57,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * }
  * </pre>
  */
+//[$1 nick 2018-08-02]
 public class RetryLoop
 {
     private boolean         isDone = false;
@@ -100,6 +101,11 @@ public class RetryLoop
         return client.getConnectionHandlingPolicy().callWithRetry(client, proc);
     }
 
+    /**
+     * 构造函数里传入重试策略和追踪工具
+     * @param retryPolicy
+     * @param tracer
+     */
     RetryLoop(RetryPolicy retryPolicy, AtomicReference<TracerDriver> tracer)
     {
         this.retryPolicy = retryPolicy;
@@ -126,6 +132,7 @@ public class RetryLoop
 
     /**
      * Utility - return true if the given Zookeeper result code is retry-able
+     * 开放的工具类，用于判断当前的 zk result code 是否是可以重连的状态
      *
      * @param rc result code
      * @return true/false
@@ -141,6 +148,7 @@ public class RetryLoop
 
     /**
      * Utility - return true if the given exception is retry-able
+     * 开放的工具类，用于判断当前的异常是否是可以重连的异常类型
      *
      * @param exception exception to check
      * @return true/false
