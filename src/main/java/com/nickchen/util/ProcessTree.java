@@ -29,8 +29,8 @@ public class ProcessTree {
     private static ProcessStatus processStatus = new ProcessStatus();
     private static int totalJavaFileCount = 0;
     private static List<String> goodCodeMarkQueue = new ArrayList<>();
-//    private static final String PROJECT_ROOT_PATH = "e:/curator";
-    private static final String PROJECT_ROOT_PATH = "/Users/nickChen/personal/project/curatorSource/curator";
+    private static final String PROJECT_ROOT_PATH = "e:/curator";
+//    private static final String PROJECT_ROOT_PATH = "/Users/nickChen/personal/project/curatorSource/curator";
 
     private static void initFilterFiles() {
         String[] fileName = new String[]{".git", ".", ".gitignore", ".idea", "target",

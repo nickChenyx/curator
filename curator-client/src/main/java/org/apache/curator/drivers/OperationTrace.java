@@ -27,7 +27,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Used to trace the metrics of a certain Zookeeper operation.
+ *
+ * 统计指标的 trace，用来统计某些 zk 操作
  */
+//[$3 nick 2018-08-04]
 public class OperationTrace
 {
     private final String name;
@@ -40,6 +43,9 @@ public class OperationTrace
     private String path;
     private boolean withWatcher;
     private long sessionId;
+    /**
+     * zk 对应的节点属性
+     */
     private Stat stat;
 
     private final long startTimeNanos = System.nanoTime();

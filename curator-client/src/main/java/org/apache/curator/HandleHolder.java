@@ -91,6 +91,9 @@ class HandleHolder
      * 关闭现有的 zk 连接
      * 新建一个
      * 可以看到是 Helper 维持着 ZooKeeper 实例
+     *
+     * 参看 {@link ConnectionState#reset()} 内的使用方式
+     *
      * @throws Exception
      */
     void closeAndReset() throws Exception

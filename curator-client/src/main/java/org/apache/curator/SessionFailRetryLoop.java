@@ -90,8 +90,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *     retryLoop.close();
  * }
  * </pre>
+ *
+ * 是用来处理和 zk 连接时 session 过期的时候，方便做重试策略。
  */
-//[$1 nick 2018-08-02]
+//[$3 nick 2018-08-04]
 public class SessionFailRetryLoop implements Closeable
 {
     private final CuratorZookeeperClient    client;
@@ -99,8 +101,15 @@ public class SessionFailRetryLoop implements Closeable
     private final Thread                    ourThread = Thread.currentThread();
     private final AtomicBoolean             sessionHasFailed = new AtomicBoolean(false);
     private final AtomicBoolean             isDone = new AtomicBoolean(false);
+    /**
+     * 类是 SessionFailRetryLoop，但实际上并没有继承 RetryLoop，而是采取了组合的形式。
+     * // TODO 但实际上两个 {@link SessionFailRetryLoop} {@link RetryLoop} 有相似的方法，为啥没有抽象成接口呢？
+     */
     private final RetryLoop                 retryLoop;
 
+    /**
+     * zk 的 watcher 用来观察是否是 session 过期事件
+     */
     private final Watcher         watcher = new Watcher()
     {
         @Override
@@ -113,9 +122,14 @@ public class SessionFailRetryLoop implements Closeable
             }
         }
     };
-
+    /**
+     * 这里是 static 的静态 set，存的时候存的都是 ourThread。 用来记录被标记过期的线程。
+     */
     private static final Set<Thread>        failedSessionThreads = Sets.newSetFromMap(Maps.<Thread, Boolean>newConcurrentMap());
 
+    /**
+     * 专门新建的一个标记 session 过期的异常，会在 {@link ConnectionState#getZooKeeper()} 里被抛出
+     */
     public static class SessionFailedException extends Exception
     {
       private static final long serialVersionUID = 1L;
@@ -138,7 +152,7 @@ public class SessionFailRetryLoop implements Closeable
 
     /**
      * Convenience utility: creates a "session fail" retry loop calling the given proc
-     *
+     * 一个快捷工具，
      * @param client Zookeeper
      * @param mode how to handle session failures
      * @param proc procedure to call with retry
@@ -187,16 +201,24 @@ public class SessionFailRetryLoop implements Closeable
 
     /**
      * SessionFailRetryLoop must be started
+     * 必须要运行 start 方法，这样才能把 watcher 注册上去
      */
     public void     start()
     {
         Preconditions.checkState(Thread.currentThread().equals(ourThread), "Not in the correct thread");
 
+        /**
+         * 最后还是添加到 {@link ConnectionState#parentWatchers}
+         */
         client.addParentWatcher(watcher);
     }
 
     /**
      * If true is returned, make an attempt at the set of operations
+     * 将 isDone 标记为 true，同时返回之前的值。
+     *
+     * 初始值是 false，执行该方法的时候强制转为 true。
+     * 如果在处理 retry 的时候又出现了 session fail，则再标记为 false
      *
      * @return true/false
      */
@@ -208,6 +230,8 @@ public class SessionFailRetryLoop implements Closeable
 
     /**
      * Must be called in a finally handler when done with the loop
+     *
+     * 注意必须放在 finally 代码段内执行
      */
     @Override
     public void close()
@@ -220,6 +244,7 @@ public class SessionFailRetryLoop implements Closeable
 
     /**
      * Pass any caught exceptions here
+     * 处理所有捕获的异常，核心方法
      *
      * @param exception the exception
      * @throws Exception if not retry-able or the retry policy returned negative
@@ -228,11 +253,21 @@ public class SessionFailRetryLoop implements Closeable
     {
         Preconditions.checkState(Thread.currentThread().equals(ourThread), "Not in the correct thread");
 
+        /**
+         * 判断是否需要传递到 {@link SessionFailRetryLoop#retryLoop}
+         */
         boolean     passUp = true;
         if ( sessionHasFailed.get() )
         {
             switch ( mode )
             {
+                /**
+                 * 这里就涉及到了 {@link SessionFailRetryLoop.Mode} 的设计了
+                 * RETRY 模式的话，重置fail状态，若异常还是 SessionFailedException 的话，重置 Done，方便直接调用 {@link SessionFailRetryLoop#shouldContinue()}  方法，
+                 * 在业务层继续处理。（这一块是上层强耦合的）
+                 * FAIL 模式的话，会直接将遇到的异常传递到 {@link SessionFailRetryLoop#retryLoop} 进行处理，
+                 * 感觉这里命名应该叫 PASSUP 更好点。
+                 */
                 case RETRY:
                 {
                     sessionHasFailed.set(false);

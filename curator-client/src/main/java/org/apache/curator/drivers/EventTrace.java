@@ -18,7 +18,10 @@
  */
 package org.apache.curator.drivers;
 
-//[$1 nick 2018-08-02]
+/**
+ * 只记录事件名称的trace 功能比较弱，更多统计的 trace 是 {@link OperationTrace}
+ */
+//[$3 nick 2018-08-04]
 public class EventTrace
 {
   private final String name;
@@ -43,6 +46,11 @@ public class EventTrace
     return this.sessionId;
   }
 
+  /**
+   *
+   * 使用这个方法调用对应的 TraceDriver 来处理
+   * // TODO 可不可以说是让实体有了实际作用，就不是一个那么贫血的模型？
+   */
   public void commit() {
     if (this.driver instanceof AdvancedTracerDriver) {
       ((AdvancedTracerDriver) this.driver).addEvent(this);

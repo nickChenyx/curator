@@ -46,7 +46,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * A wrapper around Zookeeper that takes care of some low-level housekeeping
  */
 
-//[$1 nick 2018-08-02]
+//[$1 nick 2018-08-04]
+    
 @SuppressWarnings("UnusedDeclaration")
 public class CuratorZookeeperClient implements Closeable
 {

@@ -24,6 +24,7 @@ import org.apache.zookeeper.KeeperException;
  * This is needed to differentiate between ConnectionLossException thrown by ZooKeeper
  * and ConnectionLossException thrown by {@link ConnectionState#checkTimeouts()}
  */
+//[$3 nick 2018-08-04]
 public class CuratorConnectionLossException extends KeeperException.ConnectionLossException
 {
   private static final long serialVersionUID = 1L;

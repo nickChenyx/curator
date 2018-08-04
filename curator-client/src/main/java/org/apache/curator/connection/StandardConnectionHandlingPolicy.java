@@ -29,6 +29,7 @@ import java.util.concurrent.Callable;
  *
  * @since 3.0.0
  */
+//[$3 nick 2018-08-04]
 public class StandardConnectionHandlingPolicy implements ConnectionHandlingPolicy
 {
     private final int expirationPercent;

@@ -22,7 +22,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *  Expose more metrics for the operations and events
+ *  升级版 可以看到做兼容的时候是实现之前的接口并标记之前的接口废弃实现的。
  */
+//[$3 nick 2018-08-04]
 public abstract class AdvancedTracerDriver implements TracerDriver
 {
     /**
@@ -33,10 +35,9 @@ public abstract class AdvancedTracerDriver implements TracerDriver
     public abstract void     addTrace(OperationTrace trace);
 
     /**
-     * Add to a named counter
+     * Record the given trace event
      *
-     * @param name name of the counter
-     * @param increment amount to increment
+     * @param trace the name and sessionId of the event
      */
     public abstract void     addEvent(EventTrace trace);
 

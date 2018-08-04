@@ -23,7 +23,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Utility to time a method or portion of code
+ *
+ * 一个计时工具，至于这个时间怎么处理，还是要看 TracerDriver 的实现
  */
+//[$3 nick 2018-08-03]
 public class TimeTrace
 {
     private final String name;

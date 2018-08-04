@@ -28,7 +28,7 @@ import java.util.concurrent.Callable;
  * Abstracts connection handling so that Curator can emulate it's old, pre 3.0.0
  * handling and update to newer handling.
  */
-//[$1 nick 2018-08-01]
+//[$3 nick 2018-08-04]
 public interface ConnectionHandlingPolicy
 {
     /**
@@ -62,6 +62,8 @@ public interface ConnectionHandlingPolicy
     /**
      * Called by {@link RetryLoop#callWithRetry(CuratorZookeeperClient, Callable)} to do the work
      * of retrying
+     *
+     * 可以利用这个方法执行目标方法 proc，会利用 RetryLoop 的特性进行重试以期获得想要的结果
      *
      * @param client client
      * @param proc the procedure to retry

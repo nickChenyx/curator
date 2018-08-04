@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 通过 ZK 的 watcher 封装连接状态
  */
-//[$1 nick 2018-07-31]
+//[$3 nick 2018-07-31]
 class ConnectionState implements
         Watcher/* ZooKeeper 的基础类，用来监听连接状态*/,
         Closeable/**/
@@ -83,14 +83,15 @@ class ConnectionState implements
     private final Queue<Exception> backgroundExceptions = new ConcurrentLinkedQueue<Exception>();
     /**
      * 一列 zk 的 watcher
+     * retry 的 watcher 就会注册到这里
      */
     private final Queue<Watcher> parentWatchers = new ConcurrentLinkedQueue<Watcher>();
     /**
-     *
+     * 记录当前实例的重置次数， {@link ConnectionState#reset()}
      */
     private final AtomicLong instanceIndex = new AtomicLong();
     /**
-     *
+     * 开始建立连接的时间戳
      */
     private volatile long connectionStartMs = 0;
 
@@ -106,9 +107,18 @@ class ConnectionState implements
             parentWatchers.offer(parentWatcher);
         }
 
+        /*
+         * HandleHolder 这个类就是持有 ZooKeeper 实例用的，具体是由 Helper 来维持实例
+         */
         zooKeeper = new HandleHolder(zookeeperFactory, this, ensembleProvider, sessionTimeoutMs, canBeReadOnly);
     }
 
+    /**
+     * //TODO
+     * 这里的直接存储异常的实现原因还是有待思考的，是为了让所有的异常都能够被抛出？
+     * @return
+     * @throws Exception
+     */
     ZooKeeper getZooKeeper() throws Exception
     {
         if ( SessionFailRetryLoop.sessionForThreadHasFailed() )
@@ -116,6 +126,10 @@ class ConnectionState implements
             throw new SessionFailRetryLoop.SessionFailedException();
         }
 
+        /*
+         * 这里实现很奇特，存储起来异常继续抛出
+         */
+        //[@@ nick]
         Exception exception = backgroundExceptions.poll();
         if ( exception != null )
         {
@@ -123,6 +137,9 @@ class ConnectionState implements
             throw exception;
         }
 
+        /*
+         * 判断当前是否连接
+         */
         boolean localIsConnected = isConnected.get();
         if ( !localIsConnected )
         {
@@ -225,10 +242,14 @@ class ConnectionState implements
         return ensembleProvider;
     }
 
+    /**
+     * 结合 {@link HandleHolder#closeAndReset()} 可以看到 为什么需要主动调用一次 zooKeeper.getZooKeeper();
+     * @throws Exception
+     */
     synchronized void reset() throws Exception
     {
         log.debug("reset");
-
+        // 这里增加 instance index 是为了标记当前类被 reset 多少次了
         instanceIndex.incrementAndGet();
 
         isConnected.set(false);
@@ -237,6 +258,10 @@ class ConnectionState implements
         zooKeeper.getZooKeeper();   // initiate connection
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     private synchronized void checkTimeouts() throws Exception
     {
         final AtomicReference<String> newConnectionString = new AtomicReference<>();
@@ -249,12 +274,21 @@ class ConnectionState implements
                 return newConnectionString.get();
             }
         };
+        /*
+            获取上次链接超时时间
+         */
         int lastNegotiatedSessionTimeoutMs = getLastNegotiatedSessionTimeoutMs();
         int useSessionTimeoutMs = (lastNegotiatedSessionTimeoutMs > 0) ? lastNegotiatedSessionTimeoutMs : sessionTimeoutMs;
+        /**
+         * 看起来是一个很复杂的策略，检查超时时间的逻辑
+         * 但实际上实现类就只看到了 {@link org.apache.curator.connection.StandardConnectionHandlingPolicy} 逻辑很简单，
+         * 就是判断是否有新的 connectionString，没有就返回 NOP 有就返回 NEW_CONNECTION_STRING。
+         * 不过不管他如何处理，先看下面的 switch
+         */
         ConnectionHandlingPolicy.CheckTimeoutsResult result = connectionHandlingPolicy.checkTimeouts(hasNewConnectionString, connectionStartMs, useSessionTimeoutMs, connectionTimeoutMs);
         switch ( result )
         {
-            default:
+            default: // 小细节，这里 default 直接重用了 NOP 的处理方式 直接break 语法熟悉
             case NOP:
             {
                 break;
@@ -314,6 +348,15 @@ class ConnectionState implements
         return sessionId;
     }
 
+    /**
+     * 当遇到 SaslAuthenticated 状态时，是直接返回 wasConnected 的，
+     * 其余状态都是会做对应的处理，返回的 isConnected 都是结合实际状态的。
+     * 这里不仅仅是见检查连接状态，还会触发重连等操作
+     *
+     * @param state
+     * @param wasConnected
+     * @return
+     */
     private boolean checkState(Event.KeeperState state, boolean wasConnected)
     {
         boolean isConnected = wasConnected;
@@ -344,7 +387,7 @@ class ConnectionState implements
         case Expired:
         {
             isConnected = false;
-            checkNewConnectionString = false;
+            checkNewConnectionString = false; // 只是过期了，所以不再去获取新的 connectionString 直接重连
             handleExpiredSession();
             break;
         }
@@ -372,6 +415,10 @@ class ConnectionState implements
         return isConnected;
     }
 
+    /**
+     * 处理新的 connectionString
+     * @param newConnectionString
+     */
     private void handleNewConnectionString(String newConnectionString)
     {
         log.info("Connection string changed to: " + newConnectionString);
@@ -385,13 +432,14 @@ class ConnectionState implements
                 log.warn("Could not update the connection string because getZooKeeper() returned null.");
             }
             else
-            {
+            {   // 看看 ensembleProvider 有没有打开可更新 server list 开关
                 if ( ensembleProvider.updateServerListEnabled() )
                 {
                     zooKeeper.updateServerList(newConnectionString);
                 }
                 else
                 {
+                    // 没开就直接 reset 也不管新的 connectionString 了
                     reset();
                 }
             }

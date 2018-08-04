@@ -57,7 +57,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * }
  * </pre>
  */
-//[$1 nick 2018-08-02]
+//[$3 nick 2018-08-04]
 public class RetryLoop
 {
     private boolean         isDone = false;
@@ -68,6 +68,9 @@ public class RetryLoop
     private final RetryPolicy       retryPolicy;
     private final AtomicReference<TracerDriver>     tracer;
 
+    /**
+     * 这是个私有静态内部类，就用来做 Thred.sleep 的动作
+     */
     private static final RetrySleeper  sleeper = new RetrySleeper()
     {
         @Override
@@ -132,7 +135,7 @@ public class RetryLoop
 
     /**
      * Utility - return true if the given Zookeeper result code is retry-able
-     * 开放的工具类，用于判断当前的 zk result code 是否是可以重连的状态
+     * 判断是否需要 retry 的通用方法
      *
      * @param rc result code
      * @return true/false
@@ -179,6 +182,9 @@ public class RetryLoop
                 log.debug("Retry-able exception received", exception);
             }
 
+            /**
+             * 还是觉得设计非常美妙，这里的 retryPolicy， sleeper 以及方法体内的 tracer 都是接口，非常便于拓展！
+             */
             if ( retryPolicy.allowRetry(retryCount++, System.currentTimeMillis() - startTimeMs, sleeper) )
             {
                 new EventTrace("retries-allowed", tracer.get()).commit();
