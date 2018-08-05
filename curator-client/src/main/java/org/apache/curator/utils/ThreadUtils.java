@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
-
+//[$3 nick 2018-08-05]
 public class ThreadUtils
 {
     private static final Logger log = LoggerFactory.getLogger(ThreadUtils.class);

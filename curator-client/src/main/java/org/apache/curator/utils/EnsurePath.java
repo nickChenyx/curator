@@ -50,6 +50,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @deprecated Since 2.9.0 - Prefer CuratorFramework.create().creatingParentContainersIfNeeded() or CuratorFramework.exists().creatingParentContainersIfNeeded()
  */
+//[$3 nick 2018-08-05]
 @Deprecated
 public class EnsurePath
 {

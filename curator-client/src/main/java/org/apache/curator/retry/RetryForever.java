@@ -30,6 +30,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * {@link RetryPolicy} implementation that always <i>allowsRetry</i>.
  */
+//[$3 nick 2018-08-05]
 public class RetryForever implements RetryPolicy
 {
     private static final Logger log = LoggerFactory.getLogger(RetryForever.class);

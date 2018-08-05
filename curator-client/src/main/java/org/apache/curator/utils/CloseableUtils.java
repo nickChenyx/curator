@@ -28,6 +28,7 @@ import java.io.IOException;
 /**
  * This class adds back functionality that was removed in Guava v16.0.
  */
+//[$3 nick 2018-08-05]
 public class CloseableUtils
 {
     private static final Logger log = LoggerFactory.getLogger(CloseableUtils.class);

@@ -195,7 +195,7 @@ public class ProcessTree {
         String fileName = "goodCodeMark.md";
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(relativelyPath, fileName)))) {
             for (String line : goodCodeMarkQueue) {
-                bw.write(line);
+                bw.write("- " + line);
                 bw.newLine();
             }
         } catch (IOException e) {

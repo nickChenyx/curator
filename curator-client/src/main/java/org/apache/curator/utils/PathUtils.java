@@ -24,6 +24,7 @@ package org.apache.curator.utils;
  * See issue: https://issues.apache.org/jira/browse/ZOOKEEPER-1627
  * A temporary workaround till the issue is resolved is to keep a copy of this class locally.
  */
+//[$3 nick 2018-08-05]
 public class PathUtils {
 
     /** validate the provided znode path string

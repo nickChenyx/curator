@@ -22,7 +22,9 @@ import com.google.common.annotations.VisibleForTesting;
 
 /**
  * Retry policy that retries a set number of times with an increasing (up to a maximum bound) sleep time between retries
+ * ExponentialBackoffRetry 的有界实现，实际上父类就有... 可能这样写有利于使用者阅读吧
  */
+//[$3 nick 2018-08-05]
 public class BoundedExponentialBackoffRetry extends ExponentialBackoffRetry
 {
     private final int maxSleepTimeMs;

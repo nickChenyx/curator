@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Utils to help with ZK 3.4.x compatibility
  */
+//[$3 nick 2018-08-05]
 public class Compatibility
 {
     private static final boolean hasZooKeeperAdmin;

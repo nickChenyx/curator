@@ -44,14 +44,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A wrapper around Zookeeper that takes care of some low-level housekeeping
+ * 具体的工作类了，作为一个针对 zk 连接的封装 client，丰富的属性支持。
+ * 基本不负责任何事情，都靠内部的成员变量来操作。
  */
 
-//[$1 nick 2018-08-04]
+//[$3 nick 2018-08-05]
     
 @SuppressWarnings("UnusedDeclaration")
 public class CuratorZookeeperClient implements Closeable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    /**
+     * 封装了 zk 的各种连接状态、实例，以及内部的重连等等
+     */
     private final ConnectionState state;
     private final AtomicReference<RetryPolicy> retryPolicy = new AtomicReference<RetryPolicy>();
     private final int connectionTimeoutMs;

@@ -24,8 +24,12 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
+//[$3 nick 2018-08-05]
 // reflective version of zooKeeper.getTestable().injectSessionExpiration();
+
+/**
+ * 反射获取字段的工具类
+ */
 @SuppressWarnings("JavaReflectionMemberAccess")
 public class InjectSessionExpiration
 {

@@ -22,7 +22,10 @@ import org.apache.curator.RetrySleeper;
 
 /**
  * A retry policy that retries until a given amount of time elapses
+ * 这个不同于父类是使用重试次数来限制的，
+ * 而是利用已经使用的事件来进行限制。
  */
+//[$3 nick 2018-08-05]
 public class RetryUntilElapsed extends SleepingRetry
 {
     private final int maxElapsedTimeMs;
@@ -38,6 +41,7 @@ public class RetryUntilElapsed extends SleepingRetry
     @Override
     public boolean allowRetry(int retryCount, long elapsedTimeMs, RetrySleeper sleeper)
     {
+                                                                        // 关键代码，比较当前的已消耗事件是否超过最大限制
         return super.allowRetry(retryCount, elapsedTimeMs, sleeper) && (elapsedTimeMs < maxElapsedTimeMs);
     }
 

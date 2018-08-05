@@ -21,7 +21,7 @@ package org.apache.curator.retry;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.RetrySleeper;
 import java.util.concurrent.TimeUnit;
-
+//[$3 nick 2018-08-05]
 abstract class SleepingRetry implements RetryPolicy
 {
     private final int n;
@@ -55,5 +55,8 @@ abstract class SleepingRetry implements RetryPolicy
         return false;
     }
 
+    /**
+     * 值得学习的封装风格
+     */
     protected abstract long   getSleepTimeMs(int retryCount, long elapsedTimeMs);
 }

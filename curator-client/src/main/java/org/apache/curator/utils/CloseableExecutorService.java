@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Decoration on an ExecutorService that tracks created futures and provides
  * a method to close futures created via this class
  */
+//[$3 nick 2018-08-05]
 public class CloseableExecutorService implements Closeable
 {
     private final Logger log = LoggerFactory.getLogger(CloseableExecutorService.class);

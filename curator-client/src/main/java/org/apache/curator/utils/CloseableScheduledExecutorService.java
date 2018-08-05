@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
  * Decoration on an ScheduledExecutorService that tracks created futures and provides
  * a method to close futures created via this class
  */
+//[$3 nick 2018-08-05]
 public class CloseableScheduledExecutorService extends CloseableExecutorService
 {
     private final ScheduledExecutorService scheduledExecutorService;

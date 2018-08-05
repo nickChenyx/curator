@@ -20,7 +20,7 @@ package org.apache.curator.utils;
 
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
-
+//[$3 nick 2018-08-05]
 public interface ZookeeperFactory
 {
     /**

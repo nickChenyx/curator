@@ -6,17 +6,16 @@
 - ☼ 表示大部分完成，任有小部分收尾
 - ☀ 表示文件阅读结束
 
-> 现在 curator-client 基本上快要看完了~
+> curator-client 部分完成
 
 ```
 ====== print process status start ======
 ==== comment process start =====
-完成 : 22
-阅读中 : 2
+完成 : 43
+阅读中 : 1
 ===== comment process end =======
-==>> current progress：4.51%
+==>> current progress：8.82%
 ======= print process status end =======
-
 ├── curator-client
 │  ├── src
 │  │  ├── main
@@ -29,7 +28,7 @@
 │  │  │  │  │  │  │  │  ├── StandardConnectionHandlingPolicy.java ☀ <nick>
 │  │  │  │  │  │  │  ├── ConnectionState.java ☀ <nick>
 │  │  │  │  │  │  │  ├── CuratorConnectionLossException.java ☀ <nick>
-│  │  │  │  │  │  │  ├── CuratorZookeeperClient.java ☚ <nick>
+│  │  │  │  │  │  │  ├── CuratorZookeeperClient.java ☀ <nick>
 │  │  │  │  │  │  │  ├── drivers
 │  │  │  │  │  │  │  │  ├── AdvancedTracerDriver.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── EventTrace.java ☀ <nick>
@@ -46,34 +45,34 @@
 │  │  │  │  │  │  │  │  │  ├── FixedEnsembleProvider.java ☀ <nick>
 │  │  │  │  │  │  │  ├── HandleHolder.java ☀ <nick>
 │  │  │  │  │  │  │  ├── retry
-│  │  │  │  │  │  │  │  ├── BoundedExponentialBackoffRetry.java
-│  │  │  │  │  │  │  │  ├── ExponentialBackoffRetry.java
-│  │  │  │  │  │  │  │  ├── RetryForever.java
-│  │  │  │  │  │  │  │  ├── RetryNTimes.java
-│  │  │  │  │  │  │  │  ├── RetryOneTime.java
-│  │  │  │  │  │  │  │  ├── RetryUntilElapsed.java
-│  │  │  │  │  │  │  │  ├── SleepingRetry.java
+│  │  │  │  │  │  │  │  ├── BoundedExponentialBackoffRetry.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── ExponentialBackoffRetry.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── RetryForever.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── RetryNTimes.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── RetryOneTime.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── RetryUntilElapsed.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── SleepingRetry.java ☀ <nick>
 │  │  │  │  │  │  │  ├── RetryLoop.java ☀ <nick>
 │  │  │  │  │  │  │  ├── RetryPolicy.java ☀ <nick>
 │  │  │  │  │  │  │  ├── RetrySleeper.java ☀ <nick>
 │  │  │  │  │  │  │  ├── SessionFailRetryLoop.java ☀ <nick>
 │  │  │  │  │  │  │  ├── TimeTrace.java ☀ <nick>
 │  │  │  │  │  │  │  ├── utils
-│  │  │  │  │  │  │  │  ├── CloseableExecutorService.java
-│  │  │  │  │  │  │  │  ├── CloseableScheduledExecutorService.java
-│  │  │  │  │  │  │  │  ├── CloseableUtils.java
-│  │  │  │  │  │  │  │  ├── Compatibility.java
+│  │  │  │  │  │  │  │  ├── CloseableExecutorService.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── CloseableScheduledExecutorService.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── CloseableUtils.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── Compatibility.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── DebugUtils.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── DefaultTracerDriver.java ☀ <nick>
-│  │  │  │  │  │  │  │  ├── DefaultZookeeperFactory.java
-│  │  │  │  │  │  │  │  ├── EnsurePath.java
-│  │  │  │  │  │  │  │  ├── ExceptionAccumulator.java
-│  │  │  │  │  │  │  │  ├── InjectSessionExpiration.java
-│  │  │  │  │  │  │  │  ├── InternalACLProvider.java
-│  │  │  │  │  │  │  │  ├── PathUtils.java
-│  │  │  │  │  │  │  │  ├── ThreadUtils.java
-│  │  │  │  │  │  │  │  ├── ZKPaths.java
-│  │  │  │  │  │  │  │  ├── ZookeeperFactory.java
+│  │  │  │  │  │  │  │  ├── DefaultZookeeperFactory.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── EnsurePath.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── ExceptionAccumulator.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── InjectSessionExpiration.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── InternalACLProvider.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── PathUtils.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── ThreadUtils.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── ZKPaths.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── ZookeeperFactory.java ☀ <nick>
 ├── curator-examples
 │  ├── src
 │  │  ├── main

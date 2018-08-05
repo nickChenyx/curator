@@ -21,6 +21,7 @@ package org.apache.curator.retry;
 /**
  * Retry policy that retries a max number of times
  */
+//[$3 nick 2018-08-05]
 public class RetryNTimes extends SleepingRetry
 {
     private final int sleepMsBetweenRetries;

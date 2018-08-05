@@ -21,6 +21,7 @@ package org.apache.curator.retry;
 /**
  * A retry policy that retries only once
  */
+//[$3 nick 2018-08-05]
 public class RetryOneTime extends RetryNTimes
 {
     public RetryOneTime(int sleepMsBetweenRetry)

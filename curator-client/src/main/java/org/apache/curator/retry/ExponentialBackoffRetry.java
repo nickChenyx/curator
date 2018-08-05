@@ -26,6 +26,7 @@ import java.util.Random;
 /**
  * Retry policy that retries a set number of times with increasing sleep time between retries
  */
+//[$3 nick 2018-08-05]
 public class ExponentialBackoffRetry extends SleepingRetry
 {
     private static final Logger     log = LoggerFactory.getLogger(ExponentialBackoffRetry.class);
@@ -64,6 +65,10 @@ public class ExponentialBackoffRetry extends SleepingRetry
         return baseSleepTimeMs;
     }
 
+    /**
+     * 这里的实现比较有趣，使用的是 base * random(2^retryCount+1)，还说是复制 hadoop 的实现。
+     * 概率是重试次数越多，sleep 的时间越长。上限次数是 29次，限制 random 的位数是 2^30
+     */
     @Override
     protected long getSleepTimeMs(int retryCount, long elapsedTimeMs)
     {

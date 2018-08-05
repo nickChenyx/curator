@@ -24,6 +24,7 @@ import com.google.common.base.Throwables;
  * Utility to accumulate multiple potential exceptions into one that
  * is thrown at the end
  */
+//[$3 nick 2018-08-05]
 public class ExceptionAccumulator
 {
     private volatile Throwable mainEx = null;
@@ -44,8 +45,11 @@ public class ExceptionAccumulator
      * if the exception is {@link java.lang.InterruptedException}
      * then <code>Thread.currentThread().interrupt()</code> is called.
      *
+     * 这个设计比较有趣，将异常累加起来
+     *
      * @param e the exception
      */
+    //[@@ nick]
     public void add(Throwable e)
     {
         if ( e instanceof InterruptedException )
