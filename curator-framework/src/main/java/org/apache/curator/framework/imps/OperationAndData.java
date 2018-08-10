@@ -26,7 +26,7 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
+//[$1 nick 2018-08-09]
 class OperationAndData<T> implements Delayed, RetrySleeper
 {
     private static final AtomicLong nextOrdinal = new AtomicLong();

@@ -23,6 +23,7 @@ import org.apache.curator.framework.CuratorFramework;
 /**
  * @see CuratorFramework#getState()
  */
+//[$1 nick 2018-08-08]
 public enum CuratorFrameworkState
 {
     /**

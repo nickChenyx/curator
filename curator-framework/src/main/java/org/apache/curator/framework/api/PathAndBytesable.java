@@ -20,6 +20,10 @@ package org.apache.curator.framework.api;
 
 import org.apache.curator.framework.CuratorFrameworkFactory;
 
+/**
+ * 提供了向指定的 ZK path 提交数据的能力
+ */
+//[$3 nick 2018-08-08]
 public interface PathAndBytesable<T>
 {
     /**

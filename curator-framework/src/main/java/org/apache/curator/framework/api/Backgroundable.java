@@ -19,7 +19,7 @@
 package org.apache.curator.framework.api;
 
 import java.util.concurrent.Executor;
-
+//[$3 nick 2018-08-08]
 public interface Backgroundable<T>
 {
     /**

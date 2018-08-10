@@ -18,6 +18,10 @@
  */
 package org.apache.curator.framework.api;
 
+/**
+ * 整合向 zk 插入数据，并监听回调以及支持 background
+ */
+//[$3 nick 2018-08-08]
 public interface BackgroundPathAndBytesable<T> extends
     Backgroundable<ErrorListenerPathAndBytesable<T>>,
     PathAndBytesable<T>

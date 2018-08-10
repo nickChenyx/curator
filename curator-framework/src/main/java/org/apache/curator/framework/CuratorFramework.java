@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Zookeeper framework-style client
  */
+//[$3 nick 2018-08-09]
 public interface CuratorFramework extends Closeable
 {
     /**

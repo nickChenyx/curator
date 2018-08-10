@@ -19,7 +19,7 @@
 package org.apache.curator.framework.api;
 
 import org.apache.zookeeper.CreateMode;
-
+//[$3 nick 2018-08-08]
 public interface CreateModable<T>
 {
     /**

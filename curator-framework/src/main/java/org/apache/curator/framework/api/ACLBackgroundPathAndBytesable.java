@@ -18,6 +18,13 @@
  */
 package org.apache.curator.framework.api;
 
+/**
+ * 这里也是一种设计风格，ParentACLable 的泛型是 BackgroundPathAndBytesable，且方法内返回的就是泛型类型，
+ * 这样就可以链式调用 BackgroundPathAndBytesable 的方法了。
+ * 这里很多接口都是这样的风格的实现。
+ */
+//[$3 nick 2018-08-08]
+//[@@ nick]
 public interface ACLBackgroundPathAndBytesable<T> extends
     ParentACLable<BackgroundPathAndBytesable<T>>,
     BackgroundPathAndBytesable<T>

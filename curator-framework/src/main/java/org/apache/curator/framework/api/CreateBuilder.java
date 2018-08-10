@@ -18,6 +18,13 @@
  */
 package org.apache.curator.framework.api;
 
+/**
+ * 比较奇特 {@link CreateBuilder2}
+ * 通过这种方式实现接口方法的窄化...
+ * 留意一下这种方式，应该是链式调用里处理的一种方式
+ */
+//[$3 nick 2018-08-08]
+//[@@ nick]
 public interface CreateBuilder extends CreateBuilderMain
 {
     /**
