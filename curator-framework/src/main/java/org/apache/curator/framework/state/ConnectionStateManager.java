@@ -40,7 +40,13 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Used internally to manage connection state
+ *
+ * 这个类处理了连接 state 的状态变更，并且存储在一个Size 20的队里中，一次次取出这些事件通知 Listener 处理
+ *
+ * 这个类的设计很好，有后台跑的任务 processEvent，有block等待连接，有notifyAll通知状态变更，是个不错的实践！
  */
+//[$3 nick 2018-08-30]
+//[@@ nick]
 public class ConnectionStateManager implements Closeable
 {
     private static final int QUEUE_SIZE;
@@ -76,6 +82,10 @@ public class ConnectionStateManager implements Closeable
     // guarded by sync
     private ConnectionState currentConnectionState;
 
+    /**
+     * 取决于 executors 是什么模型，默认是单线程跑，所以没啥内存可见性问题，如果改为多线程后台执行
+     * 这里的 volatile 就重要了，保证了主存的可见性
+     */
     private volatile long startOfSuspendedEpoch = 0;
 
     private enum State
@@ -146,7 +156,7 @@ public class ConnectionStateManager implements Closeable
 
     /**
      * Change to {@link ConnectionState#SUSPENDED} only if not already suspended and not lost
-     *
+     *                                             只有在尚未 suspended 且没有 lost 的情况下
      * @return true if connection is set to SUSPENDED
      */
     public synchronized boolean setToSuspended()
@@ -189,9 +199,11 @@ public class ConnectionStateManager implements Closeable
         setCurrentConnectionState(newConnectionState);
 
         ConnectionState localState = newConnectionState;
+        // read only 也算 = =..
         boolean isNegativeMessage = ((newConnectionState == ConnectionState.LOST) || (newConnectionState == ConnectionState.SUSPENDED) || (newConnectionState == ConnectionState.READ_ONLY));
         if ( !isNegativeMessage && initialConnectMessageSent.compareAndSet(false, true) )
         {
+            // 搭配上面的判断，主要是为了将 RECONNECT 和 CONNECTED 统一到 CONNECTED
             localState = ConnectionState.CONNECTED;
         }
 
@@ -200,6 +212,9 @@ public class ConnectionStateManager implements Closeable
         return true;
     }
 
+    /**
+     * wait 等待连接
+     */
     public synchronized boolean blockUntilConnected(int maxWaitTime, TimeUnit units) throws InterruptedException
     {
         long startTime = System.currentTimeMillis();
@@ -232,6 +247,10 @@ public class ConnectionStateManager implements Closeable
         return (currentConnectionState != null) && currentConnectionState.isConnected();
     }
 
+    /**
+     * 传入 state 改变的事件，触发wait的方法唤醒重新判断连接状态
+     * @param state
+     */
     private void postState(ConnectionState state)
     {
         log.info("State change: " + state);
@@ -245,6 +264,9 @@ public class ConnectionStateManager implements Closeable
         }
     }
 
+    /**
+     * 后台线程一直在执行的任务，处理 state 改变事件
+     */
     private void processEvents()
     {
         while ( state.get() == State.STARTED )
@@ -252,9 +274,12 @@ public class ConnectionStateManager implements Closeable
             try
             {
                 int useSessionTimeoutMs = getUseSessionTimeoutMs();
+                // 如果上次 suspended 尚未存在，则取 sessionTimeout 的一半；否则取suspended 已经耗时多久
                 long elapsedMs = startOfSuspendedEpoch == 0 ? useSessionTimeoutMs / 2 : System.currentTimeMillis() - startOfSuspendedEpoch;
+                // poll 超时时间
                 long pollMaxMs = useSessionTimeoutMs - elapsedMs;
 
+                // 这个 timeout 时间计算有点恶心
                 final ConnectionState newState = eventQueue.poll(pollMaxMs, TimeUnit.MILLISECONDS);
                 if ( newState != null )
                 {
@@ -304,6 +329,7 @@ public class ConnectionStateManager implements Closeable
                 log.warn(String.format("Session timeout has elapsed while SUSPENDED. Injecting a session expiration. Elapsed ms: %d. Adjusted session timeout ms: %d", elapsedMs, useSessionTimeoutMs));
                 try
                 {
+                    // 主动标记 close
                     Compatibility.injectSessionExpiration(client.getZookeeperClient().getZooKeeper());
                 }
                 catch ( Exception e )
@@ -317,6 +343,7 @@ public class ConnectionStateManager implements Closeable
             try
             {
                 // give ConnectionState.checkTimeouts() a chance to run, reset ensemble providers, etc.
+                // 这里调用getZooKeeper()会触发ConnectionState.checkTimeouts()方法来重置zk的newConnectionString
                 client.getZookeeperClient().getZooKeeper();
             }
             catch ( Exception e )
@@ -332,6 +359,8 @@ public class ConnectionStateManager implements Closeable
         startOfSuspendedEpoch = (currentConnectionState == ConnectionState.SUSPENDED) ? System.currentTimeMillis() : 0;
     }
 
+    // 获取上次session超时时间，如果为0的话，取默认的值
+    // 如果已经有了 suspended 的时间，那此时的 session超时时间还得乘以个 sessionExpirationPercent 百分比才是最后的时间
     private int getUseSessionTimeoutMs() {
         int lastNegotiatedSessionTimeoutMs = client.getZookeeperClient().getLastNegotiatedSessionTimeoutMs();
         int useSessionTimeoutMs = (lastNegotiatedSessionTimeoutMs > 0) ? lastNegotiatedSessionTimeoutMs : sessionTimeoutMs;

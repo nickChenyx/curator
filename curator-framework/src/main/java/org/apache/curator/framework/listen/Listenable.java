@@ -23,6 +23,7 @@ import java.util.concurrent.Executor;
 /**
  * Abstracts a listenable object
  */
+//[$3 nick 2018-09-05]
 public interface Listenable<T>
 {
     /**

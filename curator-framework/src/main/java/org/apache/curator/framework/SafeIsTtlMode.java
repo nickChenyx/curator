@@ -20,9 +20,10 @@ package org.apache.curator.framework;
 
 import org.apache.curator.utils.Compatibility;
 import org.apache.zookeeper.CreateMode;
-
+//[$3 nick 2018-09-05]
 public class SafeIsTtlMode
 {
+    // 这个单例写的啥意思哦，明明可以直接用 mode.isTTL() 就可以了，还要再封装一层
     private static class Internal
     {
         private static final Internal instance = new Internal();

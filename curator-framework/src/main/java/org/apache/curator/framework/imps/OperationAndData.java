@@ -26,9 +26,16 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-//[$1 nick 2018-08-09]
+
+/**
+ * 一个高级抽象，把行为和数据绑定在了一起
+ * 可以有retry、callback、errorCallback、delay 等多种行为能力
+ */
+//[$3 nick 2018-08-28]
+//[@@ nick]
 class OperationAndData<T> implements Delayed, RetrySleeper
 {
+    // 全局的一个计数器
     private static final AtomicLong nextOrdinal = new AtomicLong();
 
     private final BackgroundOperation<T> operation;
@@ -145,6 +152,7 @@ class OperationAndData<T> implements Delayed, RetrySleeper
         {
             if ( o instanceof OperationAndData )
             {
+                // 同样的delay的时间的情况下，通过生成实例的唯一递增标识判断大小
                 diff = ordinal.get() - ((OperationAndData)o).ordinal.get();
             }
         }

@@ -26,6 +26,7 @@ import org.apache.zookeeper.Watcher;
 /**
  * Represents state changes in the connection to ZK
  */
+//[$3 nick 2018-08-29]
 public enum ConnectionState
 {
     /**

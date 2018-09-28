@@ -29,6 +29,10 @@ import org.apache.zookeeper.ZooDefs;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * 用来创建节点的，只不过这个节点路径都是在 namespace 之下
+ */
+//[$3 nick 2018-08-29]
 class NamespaceImpl
 {
     private final CuratorFrameworkImpl client;

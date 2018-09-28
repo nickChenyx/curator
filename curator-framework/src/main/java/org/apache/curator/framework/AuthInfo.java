@@ -21,6 +21,10 @@ package org.apache.curator.framework;
 
 import java.util.Arrays;
 
+/**
+ * TODO 这玩意儿是干啥用的
+ */
+//[$3 nick 2018-08-31]
 public class AuthInfo
 {
     final String    scheme;

@@ -30,6 +30,7 @@ import java.util.concurrent.Executor;
 /**
  * Abstracts an object that has listeners
  */
+//[$3 nick 2018-08-28]
 public class ListenerContainer<T> implements Listenable<T>
 {
     private final Logger                        log = LoggerFactory.getLogger(getClass());

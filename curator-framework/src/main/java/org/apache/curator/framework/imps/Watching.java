@@ -22,7 +22,7 @@ package org.apache.curator.framework.imps;
 import org.apache.curator.framework.api.CuratorWatcher;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
-
+//[$1 nick 2018-08-28]
 class Watching
 {
     private final Watcher watcher;

@@ -11,11 +11,13 @@
 ```
 ====== print process status start ======
 ==== comment process start =====
-完成 : 43
-阅读中 : 1
+还有部分 : 1
+完成 : 71
+阅读中 : 7
 ===== comment process end =======
-==>> current progress：8.82%
+==>> current progress：14.5%
 ======= print process status end =======
+
 ├── curator-client
 │  ├── src
 │  │  ├── main
@@ -128,10 +130,10 @@
 │  │  │  │  │  │  ├── curator
 │  │  │  │  │  │  │  ├── framework
 │  │  │  │  │  │  │  │  ├── api
-│  │  │  │  │  │  │  │  │  ├── ACLable.java
+│  │  │  │  │  │  │  │  │  ├── ACLable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── ACLableExistBuilderMain.java
-│  │  │  │  │  │  │  │  │  ├── ACLBackgroundPathAndBytesable.java
-│  │  │  │  │  │  │  │  │  ├── ACLCreateModeBackgroundPathAndBytesable.java
+│  │  │  │  │  │  │  │  │  ├── ACLBackgroundPathAndBytesable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── ACLCreateModeBackgroundPathAndBytesable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── ACLCreateModePathAndBytesable.java
 │  │  │  │  │  │  │  │  │  ├── ACLCreateModeStatBackgroundPathAndBytesable.java
 │  │  │  │  │  │  │  │  │  ├── ACLPathAndBytesable.java
@@ -139,24 +141,24 @@
 │  │  │  │  │  │  │  │  │  ├── Addable.java
 │  │  │  │  │  │  │  │  │  ├── AddStatConfigEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── AsyncReconfigurable.java
-│  │  │  │  │  │  │  │  │  ├── Backgroundable.java
-│  │  │  │  │  │  │  │  │  ├── BackgroundCallback.java
+│  │  │  │  │  │  │  │  │  ├── Backgroundable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── BackgroundCallback.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── BackgroundEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── BackgroundPathable.java
 │  │  │  │  │  │  │  │  │  ├── BackgroundPathableQuietlyable.java
-│  │  │  │  │  │  │  │  │  ├── BackgroundPathAndBytesable.java
+│  │  │  │  │  │  │  │  │  ├── BackgroundPathAndBytesable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── BackgroundVersionable.java
 │  │  │  │  │  │  │  │  │  ├── ChildrenDeletable.java
-│  │  │  │  │  │  │  │  │  ├── Compressible.java
+│  │  │  │  │  │  │  │  │  ├── Compressible.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── CompressionProvider.java
 │  │  │  │  │  │  │  │  │  ├── ConfigureEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── CreateBackgroundModeACLable.java
-│  │  │  │  │  │  │  │  │  ├── CreateBackgroundModeStatACLable.java
-│  │  │  │  │  │  │  │  │  ├── CreateBuilder.java
-│  │  │  │  │  │  │  │  │  ├── CreateBuilder2.java
-│  │  │  │  │  │  │  │  │  ├── CreateBuilderMain.java
-│  │  │  │  │  │  │  │  │  ├── CreateModable.java
-│  │  │  │  │  │  │  │  │  ├── CreateProtectACLCreateModePathAndBytesable.java
+│  │  │  │  │  │  │  │  │  ├── CreateBackgroundModeStatACLable.java ☚ <nick>
+│  │  │  │  │  │  │  │  │  ├── CreateBuilder.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── CreateBuilder2.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── CreateBuilderMain.java ☚ <nick>
+│  │  │  │  │  │  │  │  │  ├── CreateModable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── CreateProtectACLCreateModePathAndBytesable.java ☚ <nick>
 │  │  │  │  │  │  │  │  │  ├── CuratorEvent.java
 │  │  │  │  │  │  │  │  │  ├── CuratorEventType.java
 │  │  │  │  │  │  │  │  │  ├── CuratorListener.java
@@ -169,7 +171,7 @@
 │  │  │  │  │  │  │  │  │  ├── ErrorListenerEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── ErrorListenerMultiTransactionMain.java
 │  │  │  │  │  │  │  │  │  ├── ErrorListenerPathable.java
-│  │  │  │  │  │  │  │  │  ├── ErrorListenerPathAndBytesable.java
+│  │  │  │  │  │  │  │  │  ├── ErrorListenerPathAndBytesable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── ErrorListenerReconfigBuilderMain.java
 │  │  │  │  │  │  │  │  │  ├── ExistsBuilder.java
 │  │  │  │  │  │  │  │  │  ├── ExistsBuilderMain.java
@@ -185,11 +187,11 @@
 │  │  │  │  │  │  │  │  │  ├── Leaveable.java
 │  │  │  │  │  │  │  │  │  ├── LeaveStatConfigEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── Membersable.java
-│  │  │  │  │  │  │  │  │  ├── ParentACLable.java
+│  │  │  │  │  │  │  │  │  ├── ParentACLable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── Pathable.java
-│  │  │  │  │  │  │  │  │  ├── PathAndBytesable.java
-│  │  │  │  │  │  │  │  │  ├── ProtectACLCreateModePathAndBytesable.java
-│  │  │  │  │  │  │  │  │  ├── ProtectACLCreateModeStatPathAndBytesable.java
+│  │  │  │  │  │  │  │  │  ├── PathAndBytesable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── ProtectACLCreateModePathAndBytesable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── ProtectACLCreateModeStatPathAndBytesable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── Quietly.java
 │  │  │  │  │  │  │  │  │  ├── ReconfigBuilder.java
 │  │  │  │  │  │  │  │  │  ├── ReconfigBuilderMain.java
@@ -199,7 +201,7 @@
 │  │  │  │  │  │  │  │  │  ├── SetACLBuilder.java
 │  │  │  │  │  │  │  │  │  ├── SetDataBackgroundVersionable.java
 │  │  │  │  │  │  │  │  │  ├── SetDataBuilder.java
-│  │  │  │  │  │  │  │  │  ├── Statable.java
+│  │  │  │  │  │  │  │  │  ├── Statable.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── StatConfigureEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── StatPathable.java
 │  │  │  │  │  │  │  │  │  ├── SyncBuilder.java
@@ -220,28 +222,28 @@
 │  │  │  │  │  │  │  │  │  │  ├── TransactionOp.java
 │  │  │  │  │  │  │  │  │  │  ├── TransactionSetDataBuilder.java
 │  │  │  │  │  │  │  │  │  │  ├── TypeAndPath.java
-│  │  │  │  │  │  │  │  │  ├── UnhandledErrorListener.java
+│  │  │  │  │  │  │  │  │  ├── UnhandledErrorListener.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── Versionable.java
 │  │  │  │  │  │  │  │  │  ├── VersionPathAndBytesable.java
 │  │  │  │  │  │  │  │  │  ├── Watchable.java
 │  │  │  │  │  │  │  │  │  ├── WatchBackgroundEnsembleable.java
 │  │  │  │  │  │  │  │  │  ├── WatchPathable.java
-│  │  │  │  │  │  │  │  ├── AuthInfo.java
-│  │  │  │  │  │  │  │  ├── CuratorFramework.java
+│  │  │  │  │  │  │  │  ├── AuthInfo.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── CuratorFramework.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── CuratorFrameworkFactory.java
 │  │  │  │  │  │  │  │  ├── CuratorTempFramework.java
 │  │  │  │  │  │  │  │  ├── EnsureContainers.java
 │  │  │  │  │  │  │  │  ├── imps
 │  │  │  │  │  │  │  │  │  ├── ACLing.java
 │  │  │  │  │  │  │  │  │  ├── Backgrounding.java
-│  │  │  │  │  │  │  │  │  ├── BackgroundOperation.java
+│  │  │  │  │  │  │  │  │  ├── BackgroundOperation.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── BackgroundSyncImpl.java
 │  │  │  │  │  │  │  │  │  ├── CompatibleCreateCallback.java
-│  │  │  │  │  │  │  │  │  ├── CreateBuilderImpl.java
+│  │  │  │  │  │  │  │  │  ├── CreateBuilderImpl.java ☚ <nick>
 │  │  │  │  │  │  │  │  │  ├── CreateZK35.java
 │  │  │  │  │  │  │  │  │  ├── CuratorEventImpl.java
-│  │  │  │  │  │  │  │  │  ├── CuratorFrameworkImpl.java
-│  │  │  │  │  │  │  │  │  ├── CuratorFrameworkState.java
+│  │  │  │  │  │  │  │  │  ├── CuratorFrameworkImpl.java ☼ <nick>
+│  │  │  │  │  │  │  │  │  ├── CuratorFrameworkState.java ☚ <nick>
 │  │  │  │  │  │  │  │  │  ├── CuratorMultiTransactionImpl.java
 │  │  │  │  │  │  │  │  │  ├── CuratorMultiTransactionRecord.java
 │  │  │  │  │  │  │  │  │  ├── CuratorTempFrameworkImpl.java
@@ -263,10 +265,10 @@
 │  │  │  │  │  │  │  │  │  ├── InternalConnectionHandler.java
 │  │  │  │  │  │  │  │  │  ├── NamespaceFacade.java
 │  │  │  │  │  │  │  │  │  ├── NamespaceFacadeCache.java
-│  │  │  │  │  │  │  │  │  ├── NamespaceImpl.java
+│  │  │  │  │  │  │  │  │  ├── NamespaceImpl.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── NamespaceWatchedEvent.java
 │  │  │  │  │  │  │  │  │  ├── NamespaceWatcher.java
-│  │  │  │  │  │  │  │  │  ├── OperationAndData.java
+│  │  │  │  │  │  │  │  │  ├── OperationAndData.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── PathAndBytes.java
 │  │  │  │  │  │  │  │  │  ├── ReconfigBuilderImpl.java
 │  │  │  │  │  │  │  │  │  ├── RemoveWatchesBuilderImpl.java
@@ -278,12 +280,12 @@
 │  │  │  │  │  │  │  │  │  ├── TransactionOpImpl.java
 │  │  │  │  │  │  │  │  │  ├── WatcherRemovalFacade.java
 │  │  │  │  │  │  │  │  │  ├── WatcherRemovalManager.java
-│  │  │  │  │  │  │  │  │  ├── Watching.java
+│  │  │  │  │  │  │  │  │  ├── Watching.java ☚ <nick>
 │  │  │  │  │  │  │  │  ├── listen
-│  │  │  │  │  │  │  │  │  ├── Listenable.java
-│  │  │  │  │  │  │  │  │  ├── ListenerContainer.java
-│  │  │  │  │  │  │  │  │  ├── ListenerEntry.java
-│  │  │  │  │  │  │  │  ├── SafeIsTtlMode.java
+│  │  │  │  │  │  │  │  │  ├── Listenable.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── ListenerContainer.java ☀ <nick>
+│  │  │  │  │  │  │  │  │  ├── ListenerEntry.java ☀ <nick>
+│  │  │  │  │  │  │  │  ├── SafeIsTtlMode.java ☀ <nick>
 │  │  │  │  │  │  │  │  ├── schema
 │  │  │  │  │  │  │  │  │  ├── DefaultSchemaValidator.java
 │  │  │  │  │  │  │  │  │  ├── Schema.java
@@ -293,10 +295,10 @@
 │  │  │  │  │  │  │  │  │  ├── SchemaValidator.java
 │  │  │  │  │  │  │  │  │  ├── SchemaViolation.java
 │  │  │  │  │  │  │  │  ├── state
-│  │  │  │  │  │  │  │  │  ├── ConnectionState.java
+│  │  │  │  │  │  │  │  │  ├── ConnectionState.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── ConnectionStateErrorPolicy.java
 │  │  │  │  │  │  │  │  │  ├── ConnectionStateListener.java
-│  │  │  │  │  │  │  │  │  ├── ConnectionStateManager.java
+│  │  │  │  │  │  │  │  │  ├── ConnectionStateManager.java ☀ <nick>
 │  │  │  │  │  │  │  │  │  ├── SessionConnectionStateErrorPolicy.java
 │  │  │  │  │  │  │  │  │  ├── StandardConnectionStateErrorPolicy.java
 │  │  │  │  │  │  │  │  ├── WatcherRemoveCuratorFramework.java

@@ -69,7 +69,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-//[$1 nick 2018-08-09]
+//[$2 nick 2018-08-30]
 public class CuratorFrameworkImpl implements CuratorFramework
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -80,7 +80,9 @@ public class CuratorFrameworkImpl implements CuratorFramework
     private final int maxCloseWaitMs;
     private final BlockingQueue<OperationAndData<?>> backgroundOperations;
     private final BlockingQueue<OperationAndData<?>> forcedSleepOperations;
+    // 提供了基于 namespace 下的 zk path create 操作
     private final NamespaceImpl namespace;
+    // 处理了连接 state 的状态变更，并通知 Listener 处理
     private final ConnectionStateManager connectionStateManager;
     private final List<AuthInfo> authInfos;
     private final byte[] defaultData;

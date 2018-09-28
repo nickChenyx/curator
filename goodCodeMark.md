@@ -1,3 +1,7 @@
 - org.apache.curator.ConnectionState.java <nick> [132]
 - org.apache.curator.HandleHolder.java <nick> [107]
 - org.apache.curator.utils.ExceptionAccumulator.java <nick> [52]
+- org.apache.curator.framework.api.ACLBackgroundPathAndBytesable.java <nick> [27]
+- org.apache.curator.framework.api.CreateBuilder.java <nick> [27]
+- org.apache.curator.framework.imps.OperationAndData.java <nick> [35]
+- org.apache.curator.framework.state.ConnectionStateManager.java <nick> [49]
