@@ -17,7 +17,7 @@
  * under the License.
  */
 package org.apache.curator.framework.api;
-
+//[$3 nick 2018-09-29]
 public interface Guaranteeable<T>
 {
     /**

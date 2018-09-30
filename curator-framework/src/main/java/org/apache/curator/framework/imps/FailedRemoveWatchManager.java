@@ -19,8 +19,13 @@
 package org.apache.curator.framework.imps;
 
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.api.RemoveWatchesType;
 import org.apache.zookeeper.Watcher;
-
+/**
+ * Remove 操作失败 Manager 主要是调用 {@link RemoveWatchesType#guaranteed()}
+ * {@link FailedRemoveWatchDetails} 这里的 path 可以对应多个 watcher，如果没指定 watcher 就会删除该路径下的所有 watcher
+ */
+//[$3 nick 2018-09-29]
 class FailedRemoveWatchManager extends FailedOperationManager<FailedRemoveWatchManager.FailedRemoveWatchDetails>
 {
     FailedRemoveWatchManager(CuratorFramework client)

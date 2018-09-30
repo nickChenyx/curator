@@ -19,7 +19,12 @@
 package org.apache.curator.framework.imps;
 
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.api.DeleteBuilder;
 
+/**
+ * Delete 操作失败 Manager 主要是调用 {@link DeleteBuilder#guaranteed()}
+ */
+//[$3 nick 2018-09-29]
 class FailedDeleteManager extends FailedOperationManager<String>
 {
     FailedDeleteManager(CuratorFramework client)

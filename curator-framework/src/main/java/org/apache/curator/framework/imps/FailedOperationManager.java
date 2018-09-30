@@ -19,12 +19,18 @@
 package org.apache.curator.framework.imps;
 
 import org.apache.curator.framework.CuratorFramework;
+
 import org.apache.curator.utils.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.annotations.VisibleForTesting;
 
+/**
+ * 通过向 zk 添加 T 数据，用来确保该操作会执行成功
+ *
+ */
+//[$3 nick 2018-09-29]
 abstract class FailedOperationManager<T>
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -60,11 +66,16 @@ abstract class FailedOperationManager<T>
             }
             catch ( Exception e )
             {
-                ThreadUtils.checkInterrupted(e);
-                addFailedOperation(details);
-            }
+            ThreadUtils.checkInterrupted(e);
+            addFailedOperation(details);
+        }
         }
     }
-    
+
+    /**
+     * 主要扩展点，用来做 guarantee 操作
+     * @param details details
+     * @throws Exception e
+     */
     protected abstract void executeGuaranteedOperationInBackground(T details) throws Exception;
 }

@@ -22,6 +22,7 @@ package org.apache.curator.framework.state;
  * This policy treats {@link ConnectionState#SUSPENDED} and {@link ConnectionState#LOST}
  * as errors
  */
+//[$3 nick 2018-09-29]
 public class StandardConnectionStateErrorPolicy implements ConnectionStateErrorPolicy
 {
     @Override

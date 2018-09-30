@@ -17,7 +17,11 @@
  * under the License.
  */
 package org.apache.curator.framework.api;
-
+import org.apache.curator.framework.imps.GzipCompressionProvider;
+/**
+ * 数据压缩执行者，默认的实现就一个 Gzip {@link GzipCompressionProvider}
+ */
+//[$3 nick 2018-09-29]
 public interface CompressionProvider
 {
     public byte[]       compress(String path, byte[] data) throws Exception;

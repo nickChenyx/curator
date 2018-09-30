@@ -24,6 +24,10 @@ import java.io.ByteArrayOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * 提供 Gzip 压缩/解压缩 data
+ */
+//[$3 nick 2018-09-29]
 public class GzipCompressionProvider implements CompressionProvider
 {
     @Override

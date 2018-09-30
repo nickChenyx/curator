@@ -24,6 +24,7 @@ package org.apache.curator.framework.state;
  *
  * @since 3.0.0
  */
+//[$3 nick 2018-09-29]
 public interface ConnectionStateErrorPolicy
 {
     /**

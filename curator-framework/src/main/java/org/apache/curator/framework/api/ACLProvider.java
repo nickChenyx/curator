@@ -22,7 +22,7 @@ import org.apache.curator.utils.InternalACLProvider;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 import java.util.List;
-
+//[$3 nick 2018-09-29]
 public interface ACLProvider extends InternalACLProvider
 {
     /**

@@ -29,6 +29,12 @@ import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.utils.EnsurePath;
 import org.apache.zookeeper.ZooKeeper;
 
+/**
+ * 很奇特，直接继承了 {@link CuratorFrameworkImpl}，这样的好处应该是能够复用该方法的 api？
+ * 可是也改写了一部分 api 代码，而且如果 impl 新增了实现，可能会影响这里的使用...
+ * 总觉得不是一个好的实现。
+ */
+//[$3 nick 2018-09-29]
 class NamespaceFacade extends CuratorFrameworkImpl
 {
     private final CuratorFrameworkImpl client;

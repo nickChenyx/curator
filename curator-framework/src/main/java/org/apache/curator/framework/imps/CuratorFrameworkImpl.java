@@ -80,18 +80,24 @@ public class CuratorFrameworkImpl implements CuratorFramework
     private final int maxCloseWaitMs;
     private final BlockingQueue<OperationAndData<?>> backgroundOperations;
     private final BlockingQueue<OperationAndData<?>> forcedSleepOperations;
-    // 提供了基于 namespace 下的 zk path create 操作
+    /** 提供了基于 namespace 下的 zk path create 操作 */
     private final NamespaceImpl namespace;
-    // 处理了连接 state 的状态变更，并通知 Listener 处理
+    /** 处理了连接 state 的状态变更，并通知 Listener 处理 */
     private final ConnectionStateManager connectionStateManager;
     private final List<AuthInfo> authInfos;
     private final byte[] defaultData;
+    /** guarantee 操作执行者 */
     private final FailedDeleteManager failedDeleteManager;
+    /** guarantee 操作执行者 */
     private final FailedRemoveWatchManager failedRemoveWatcherManager;
+    /** 压缩数据执行者 默认就 Gzip 实现 */
     private final CompressionProvider compressionProvider;
     private final ACLProvider aclProvider;
+    /** 这是一个 NameSpaceFacade 的 cache */
     private final NamespaceFacadeCache namespaceFacadeCache;
+    /** 是否创建 parent path */
     private final boolean useContainerParentsIfAvailable;
+    /** 就一个接口 判断当前状态是不是 Error，这个判断需要给 Recipes 处理，进行重连等操作 */
     private final ConnectionStateErrorPolicy connectionStateErrorPolicy;
     private final AtomicLong currentInstanceIndex = new AtomicLong(-1);
     private final InternalConnectionHandler internalConnectionHandler;

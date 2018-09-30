@@ -24,6 +24,10 @@ import com.google.common.cache.LoadingCache;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 主要是针对 {@link NamespaceFacade} 的缓存，缓存规则是 expireAfterAccess(5, TimeUnit.MINUTES)
+ */
+//[$3 nick 2018-09-29]
 class NamespaceFacadeCache
 {
     private final CuratorFrameworkImpl                  client;
